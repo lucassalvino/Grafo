@@ -1,10 +1,11 @@
 #include "edge.h"
 
-BaseGraph::Edge::Edge()
+BaseGraph::Edge::Edge(int id)
 {
-    origin = 0;
-    destiny = 0;
+    origin = nullptr;
+    destiny = nullptr;
     distance = 0;
+    this->ID = id;
 }
 
 void BaseGraph::Edge::setOrigin(Vertex *value)
@@ -47,4 +48,9 @@ std::pair<int, int> BaseGraph::Edge::getOriginDestiny()
         return std::pair<int ,int>(origin->getId(), destiny->getId());
     else
         throw std::string("Ainda nao foi realizado o set da origem ou do destino");
+}
+
+int BaseGraph::Edge::getId()
+{
+    return this->ID;
 }

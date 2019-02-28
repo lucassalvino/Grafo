@@ -4,9 +4,9 @@ BaseGraph::Graph::Graph()
     clear();
 }
 
-void BaseGraph::Graph::addEdge(Vertex* origin, Vertex* destiny, double distance, bool updateDistance)
+void BaseGraph::Graph::addEdge(Vertex* origin, Vertex* destiny, double distance, int ID, bool updateDistance)
 {
-    Edge add;
+    Edge add(ID);
     add.setOrigin(origin);
     add.setDestiny(destiny);
     add.setDistance(distance);
@@ -33,15 +33,15 @@ BaseGraph::Vertex *BaseGraph::Graph::getVertex(int id, bool add)
         vertex.push_back(add);
         return add;
     }else{
-        return 0;
+        return nullptr;
     }
 }
 
-void BaseGraph::Graph::addEdge(int origin, int destiny, double distance, bool bidirectional, bool updateDistance)
+void BaseGraph::Graph::addEdge(int origin, int destiny, double distance,int ID, bool bidirectional, bool updateDistance)
 {
-    addEdge(getVertex(origin, true), getVertex(destiny, true), distance,updateDistance);
+    addEdge(getVertex(origin, true), getVertex(destiny, true), distance,ID, updateDistance);
     if(bidirectional)
-        addEdge(getVertex(destiny, true), getVertex(origin, true), distance,updateDistance);
+        addEdge(getVertex(destiny, true), getVertex(origin, true), distance, ID+1);
 }
 
 void BaseGraph::Graph::addEdge(Edge value, bool updateDistance){
@@ -96,7 +96,7 @@ BaseGraph::Edge* BaseGraph::Graph::getEdge(int origin, int destiny)
             return &(*it);
         }
     }
-    return 0;
+    return nullptr;
 }
 
 BaseGraph::Edge* BaseGraph::Graph::getEdge(Vertex origin, Vertex destiny)
@@ -104,14 +104,14 @@ BaseGraph::Edge* BaseGraph::Graph::getEdge(Vertex origin, Vertex destiny)
     return getEdge(origin.getId(), destiny.getId());
 }
 
-BaseGraph::Edge *BaseGraph::Graph::getEdge(int index)
+BaseGraph::Edge *BaseGraph::Graph::getEdge(int id)
 {
     std::vector<BaseGraph::Edge>::iterator it = edges.begin();
     for(int i = 0;it != edges.end();i++, it++){
-        if(i == index)
+        if(it->getId() == id)
             return &(*it);
     }
-    return 0;
+    return nullptr;
 }
 
 BaseGraph::Vertex *BaseGraph::Graph::getVertexIndex(int index)
@@ -120,7 +120,7 @@ BaseGraph::Vertex *BaseGraph::Graph::getVertexIndex(int index)
     for(int i = 0;it != vertex.end(); it++, i++){
         if(i == index) return (*it);
     }
-    return 0;
+    return nullptr;
 }
 
 int BaseGraph::Graph::getNumEdge()
