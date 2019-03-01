@@ -17,8 +17,13 @@ public:
     std::vector<int> getIDVertexAdjacent();
     void addVertexAdjacent(Vertex* idVertice);
     int getGraoVertex();
+    std::vector<Vertex *> getAllAdjacents();
+    bool vertexIsVisited();
+    void setVisited();
+    void setNotVisited();
 private:
     int ID;
+    bool isVisited;
     std::vector<Vertex*> adjacent;
 protected:
 };

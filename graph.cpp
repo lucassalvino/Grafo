@@ -15,7 +15,7 @@ void BaseGraph::Graph::addEdge(Vertex* origin, Vertex* destiny, double distance,
 
 void BaseGraph::Graph::addVertex(int id)
 {
-    for(int i = 0; i < (int)vertex.size(); i++){
+    for(unsigned int i = 0; i < vertex.size(); i++){
         if(vertex[i]->getId() == id)return;
     }
     vertex.push_back(new Vertex(id));
@@ -23,7 +23,7 @@ void BaseGraph::Graph::addVertex(int id)
 
 BaseGraph::Vertex *BaseGraph::Graph::getVertex(int id, bool add)
 {
-    for(int i = 0; i<(int)vertex.size(); i++){
+    for(unsigned int i = 0; i < vertex.size(); i++){
         if(id == vertex[i]->getId()){/*vertex ja existe*/
             return vertex[i];
         }
@@ -55,7 +55,7 @@ void BaseGraph::Graph::addEdge(Edge value, bool updateDistance){
 }
 
 void BaseGraph::Graph::clear(){
-    for(int i = 0; i < (int)vertex.size(); i++){
+    for(unsigned int i = 0; i < vertex.size(); i++){
         delete [] vertex[i];
     }
     vertex.clear();
@@ -64,7 +64,7 @@ void BaseGraph::Graph::clear(){
 
 void BaseGraph::Graph::loadFromFile(std::string source){
     FILE* arq = fopen(source.c_str(), "r");
-    if(arq == 0) throw std::string("Source ["+source+"] not found");
+    if(arq == nullptr) throw std::string("Source ["+source+"] not found");
     int origin, destiny;
     double distance;
     while(fscanf(arq, "%d %d %lf",&origin,&destiny,&distance)!=-1){
@@ -75,7 +75,7 @@ void BaseGraph::Graph::loadFromFile(std::string source){
 
 void BaseGraph::Graph::saveInFile(std::string source){
     FILE* arq = fopen(source.c_str(), "w");
-    if(arq == 0) throw std::string("Source ["+source+"] not found");
+    if(arq == nullptr) throw std::string("Source ["+source+"] not found");
     std::vector<Edge>::iterator it = edges.begin();
     for(;it != edges.end(); it++){
         int origin, destiny;
@@ -123,12 +123,12 @@ BaseGraph::Vertex *BaseGraph::Graph::getVertexIndex(int index)
     return nullptr;
 }
 
-int BaseGraph::Graph::getNumEdge()
+unsigned int BaseGraph::Graph::getNumEdge()
 {
     return edges.size();
 }
 
-int BaseGraph::Graph::getNumVertex()
+unsigned int BaseGraph::Graph::getNumVertex()
 {
     return vertex.size();
 }
@@ -137,9 +137,9 @@ double **BaseGraph::Graph::getMatrix()
 {
     std::vector<Edge>::iterator it = edges.begin();
     double ** ret = new double*[vertex.size()];
-    for(int i = 0;i < (int)vertex.size();i++) ret[i] = new double[vertex.size()];
-    for(int i = 0;i<(int)vertex.size();i++)
-        for(int j = 0; j<(int)vertex.size();j++)
+    for(unsigned int i = 0;i < vertex.size();i++) ret[i] = new double[vertex.size()];
+    for(unsigned int i = 0;i< vertex.size();i++)
+        for(unsigned int j = 0; j< vertex.size();j++)
             ret[i][j] = std::numeric_limits<double>::max();
     for(; it != edges.end(); it++){
         ret[it->getOrigin()->getId()][it->getDestiny()->getId()] = it->getDistance();

@@ -2,15 +2,15 @@
 
 BaseGraph::CustomAlgorithm::CustomAlgorithm(Graph *pointerGraph)
 {
-    graph = 0;
-    if(pointerGraph == 0)
+    graph = nullptr;
+    if(pointerGraph == nullptr)
         throw std::string("He necessario informar um grafo valido");
     graph = pointerGraph;
 }
 
 BaseGraph::CustomAlgorithm::CustomAlgorithm()
 {
-    graph = 0;
+    graph = nullptr;
 }
 
 void BaseGraph::CustomAlgorithm::execute()
@@ -20,7 +20,7 @@ void BaseGraph::CustomAlgorithm::execute()
 
 void BaseGraph::CustomAlgorithm::setInstanceGraph(Graph *pointerGraph)
 {
-    if(pointerGraph == 0)
+    if(pointerGraph == nullptr)
         throw std::string("He necessario informar um grafo valido");
     else
         graph = pointerGraph;
@@ -28,7 +28,7 @@ void BaseGraph::CustomAlgorithm::setInstanceGraph(Graph *pointerGraph)
 
 void BaseGraph::CustomAlgorithm::checkInstanceGraph()
 {
-    if(graph == 0)
+    if(graph == nullptr)
         throw std::string("He necessario informar um grafo valido");
     else
         return;

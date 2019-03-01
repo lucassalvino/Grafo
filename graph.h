@@ -6,6 +6,10 @@
 #include <set>
 #include <utility>
 #include <limits>
+#include <queue>
+#include <utility>
+#include <list>
+
 namespace  BaseGraph {
 class Graph
 {
@@ -20,8 +24,8 @@ public:
     Edge *getEdge(int id);
     Vertex* getVertex(int id, bool add = false);
     Vertex* getVertexIndex(int index);
-    int getNumEdge();
-    int getNumVertex();
+    unsigned int getNumEdge();
+    unsigned int getNumVertex();
     double **getMatrix();
 protected:
     std::vector<Vertex*> vertex;

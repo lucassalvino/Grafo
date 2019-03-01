@@ -3,6 +3,7 @@
 BaseGraph::Vertex::Vertex()
 {
     ID = -1;
+    isVisited = false;
 }
 
 BaseGraph::Vertex::Vertex(int id)
@@ -58,4 +59,28 @@ void BaseGraph::Vertex::addVertexAdjacent(Vertex *idVertice)
 int BaseGraph::Vertex::getGraoVertex()
 {
     return adjacent.size();
+}
+
+std::vector<BaseGraph::Vertex *> BaseGraph::Vertex::getAllAdjacents()
+{
+    if(this->adjacent.size() == 0){
+        throw "Nao existem adjacentes para o vertice!";
+    }else{
+        return this->adjacent;
+    }
+}
+
+bool BaseGraph::Vertex::vertexIsVisited()
+{
+    return this->isVisited;
+}
+
+void BaseGraph::Vertex::setVisited()
+{
+    this->isVisited = true;
+}
+
+void BaseGraph::Vertex::setNotVisited()
+{
+    this->isVisited = false;
 }
