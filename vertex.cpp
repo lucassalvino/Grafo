@@ -63,11 +63,7 @@ int BaseGraph::Vertex::getGraoVertex()
 
 std::vector<BaseGraph::Vertex *> BaseGraph::Vertex::getAllAdjacents()
 {
-    if(this->adjacent.size() == 0){
-        throw "Nao existem adjacentes para o vertice!";
-    }else{
-        return this->adjacent;
-    }
+   return this->adjacent;
 }
 
 bool BaseGraph::Vertex::vertexIsVisited()

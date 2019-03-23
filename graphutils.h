@@ -8,10 +8,10 @@ public:
     GraphUtils(){
 
     }
-    void dijkstra(int origin, int destiny, Graph *graph);
+    std::list<Vertex *> dijkstra(int origin, int destiny, Graph *graph);
     virtual ~GraphUtils();
 private:
-    void extractMin(std::priority_queue<std::pair<Vertex *, Edge *> *> *prio_queue, int vertex);
+    void extractMin(std::priority_queue<std::pair<Vertex *, Edge *> *> *prio_queue, int vertex, BaseGraph::Graph *grafo);
 };
 }
 #endif // GRAPHUTILS_H

@@ -23,7 +23,7 @@ void BaseGraph::Graph::addVertex(int id)
 
 BaseGraph::Vertex *BaseGraph::Graph::getVertex(int id, bool add)
 {
-    for(unsigned int i = 0; i < vertex.size(); i++){
+    for(int i = 0; i < getNumVertex(); i++){
         if(id == vertex[i]->getId()){/*vertex ja existe*/
             return vertex[i];
         }
@@ -118,7 +118,7 @@ BaseGraph::Vertex *BaseGraph::Graph::getVertexIndex(int index)
 {
     std::vector<BaseGraph::Vertex*>::iterator it = vertex.begin();
     for(int i = 0;it != vertex.end(); it++, i++){
-        if(i == index) return (*it);
+        if(i == index) return *it;
     }
     return nullptr;
 }
