@@ -6,6 +6,11 @@ BaseGraph::Graph::Graph()
 
 void BaseGraph::Graph::addEdge(Vertex* origin, Vertex* destiny, double distance, int ID, bool updateDistance)
 {
+    if(ID < 0 || (ID > temp_id_edge)){
+        ID = temp_id_edge++;// número de id não foi setado, seta com valor de tem_id_edge
+    }
+    temp_id_edge = ID+1;//Atualiza ID + 1 para setar proximo ID, caso não exista
+    verificaIDEdge(ID);
     Edge add(ID);
     add.setOrigin(origin);
     add.setDestiny(destiny);
@@ -41,7 +46,7 @@ void BaseGraph::Graph::addEdge(int origin, int destiny, double distance,int ID, 
 {
     addEdge(getVertex(origin, true), getVertex(destiny, true), distance,ID, updateDistance);
     if(bidirectional)
-        addEdge(getVertex(destiny, true), getVertex(origin, true), distance, ID+1);
+        addEdge(getVertex(destiny, true), getVertex(origin, true), distance);
 }
 
 void BaseGraph::Graph::addEdge(Edge value, bool updateDistance){
@@ -54,10 +59,24 @@ void BaseGraph::Graph::addEdge(Edge value, bool updateDistance){
     if (val && updateDistance) val->setDistance(value.getDistance());//update distance
 }
 
+/*Verifica se existe uma aresta com ID duplicado, caso exista atualiza o valor de ID, para o próximo temp_id_edge
+até que o valor de ID não tenha ocorrência no conjunto arestas*/
+void BaseGraph::Graph::verificaIDEdge(int &ID)
+{
+    for(std::vector<Edge>::iterator it = edges.begin(); it!= edges.end(); it++)
+        if(ID == it->getId()){
+            ID = temp_id_edge++;
+            this->verificaIDEdge(ID);
+            return;
+        }
+    return;
+}
+
 void BaseGraph::Graph::clear(){
     for(unsigned int i = 0; i < vertex.size(); i++){
         delete [] vertex[i];
     }
+    temp_id_edge = 0;
     vertex.clear();
     edges.clear();
 }

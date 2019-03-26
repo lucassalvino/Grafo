@@ -1,7 +1,7 @@
 #include "graphutils.h"
 
 
-std::list<BaseGraph::Vertex*> BaseGraph::GraphUtils::dijkstra(int origin, int destiny, Graph* graph)
+int* BaseGraph::GraphUtils::dijkstra(int origin, Graph* graph)
 {
     /*########################### Passos de Execução ############################
      * º - Cria um fila de prioriade composta por pares, anexando cada vertice com cada unidade aresta pertecente a ele.
@@ -13,27 +13,23 @@ std::list<BaseGraph::Vertex*> BaseGraph::GraphUtils::dijkstra(int origin, int de
     std::priority_queue<std::pair<Vertex *, Edge *> *> prio_queue;
     std::list<Vertex *> listVertexes;
     double dist[graph->getNumVertex()];
-    int prev[graph->getNumVertex()];
+    int* prev = new int[graph->getNumVertex()];
     Vertex *verifyVertex;
 
     for (unsigned int i = 0; i < graph->getNumVertex(); i++) {
         graph->getVertexIndex(i)->setNotVisited();
     }
-
     for (unsigned int i = 0; i < graph->getNumVertex(); i++) {
         dist[i] = INT32_MAX;
         prev[i] = -1;
     }
-
     dist[origin] = 0;
-    listVertexes.push_back(graph->getVertex(origin));
+    Vertex* teste = graph->getVertex(origin);
+    listVertexes.push_back(teste);
 
     while(!listVertexes.empty()){
         verifyVertex = listVertexes.front(); //Pega o primeiro vértice da lista
         listVertexes.pop_front(); //Retira o vértice da lista
-
-        if(!verifyVertex->vertexIsVisited()){ // Verifica se ele já foi visitado
-
             verifyVertex->setVisited(); //Marca o vértice como visitado
             extractMin(&prio_queue,verifyVertex->getId(), graph); //Extrai os pares de arestas e os vértices adjacentes a ele
             while (!prio_queue.empty()) {
@@ -45,7 +41,7 @@ std::list<BaseGraph::Vertex*> BaseGraph::GraphUtils::dijkstra(int origin, int de
                    listVertexes.push_back(pair->first);  //Coloca o vértice na fila de análise
                 }
             }
-        }
+
     }
 
     /*
@@ -53,21 +49,7 @@ std::list<BaseGraph::Vertex*> BaseGraph::GraphUtils::dijkstra(int origin, int de
      * No vetor de ancestrais ele começa obtendo desde o destino fim até o vértice de origem
      * O algoritmo para quando no vetor de ancestrais na ultima posição há o vetor de origem
      */
-    std::list<Vertex *> output;
-    output.push_back(graph->getVertex(destiny));
-    while(true){
-        if(output.back()->getId() == origin)
-            break;
-        std::cout << "ID: " << output.back()->getId() << std::endl;
-        output.push_back(graph->getVertex(prev[output.back()->getId()]));
-    }
-
-    while(!output.empty()){
-        std::cout << "ID: " << output.front()->getId() << std::endl;
-        output.pop_front();
-    }
-    std::list<BaseGraph::Vertex*> a;
-    return a;
+    return prev;
 }
 
 BaseGraph::GraphUtils::~GraphUtils()

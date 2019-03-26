@@ -8,7 +8,7 @@ public:
     GraphUtils(){
 
     }
-    std::list<Vertex *> dijkstra(int origin, int destiny, Graph *graph);
+    int *dijkstra(int origin, Graph *graph);
     virtual ~GraphUtils();
 private:
     void extractMin(std::priority_queue<std::pair<Vertex *, Edge *> *> *prio_queue, int vertex, BaseGraph::Graph *grafo);
